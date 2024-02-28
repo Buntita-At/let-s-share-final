@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:lets_share/home/home.dart';
+import 'package:lets_share/login/login.dart';
 
 class singup extends StatelessWidget {
   @override
@@ -100,7 +101,12 @@ class singup extends StatelessWidget {
                     children: <Widget>[
                       Text("Already have an account?"),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => login()),
+                            );
+                          },
                           child: Text(
                             " Login",
                             style: TextStyle(

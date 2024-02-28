@@ -66,6 +66,8 @@ flutter:
    - assets/singin.jpg
    - assets/pink coinns.png
    - assets/pinkflower.jpg
+   - assets/mori.png
+   - assets/fuji.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

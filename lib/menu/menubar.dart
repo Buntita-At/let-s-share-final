@@ -1,105 +1,163 @@
 import 'package:flutter/material.dart';
-import 'package:lets_share/home/home.dart';
+
 import 'package:lets_share/activity/activity.dart';
 import 'package:lets_share/groups/groups.dart';
+import 'package:lets_share/home/home.dart';
 import 'package:lets_share/profile/profile.dart';
 
-void main() => runApp(const menubar());
+class menubar extends StatefulWidget {
+  @override
+  _MenuBarState createState() => _MenuBarState();
+}
 
-class menubar extends StatelessWidget {
-  const menubar({super.key});
+class _MenuBarState extends State<menubar> {
+  // Properties & Variables needed
+
+  int currentTab = 0; // to keep track of active tab index
+  final List<Widget> screens = [
+    home(),
+    groups(),
+    activity(),
+    profile(),
+  ]; // to store nested tabs
+  final PageStorageBucket bucket = PageStorageBucket();
+  Widget currentScreen = home(); // Our first view in viewport
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Floating Action Button",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.black45,
+      body: PageStorage(
+        child: currentScreen,
+        bucket: bucket,
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-        backgroundColor: const Color.fromARGB(255, 251, 45, 141),
-        foregroundColor: Colors.black,
-        elevation: 0,
-      ),
       bottomNavigationBar: BottomAppBar(
-        notchMargin: 5.0,
         shape: CircularNotchedRectangle(),
-        color: Colors.black87,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.home,
-                    color: Colors.black,
+        notchMargin: 10,
+        child: Container(
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentScreen =
+                            home(); // if user taps on this dashboard tab will be active
+                        currentTab = 0;
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.dashboard,
+                          color: currentTab == 0 ? Colors.blue : Colors.grey,
+                        ),
+                        Text(
+                          'Dashboard',
+                          style: TextStyle(
+                            color: currentTab == 0 ? Colors.blue : Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    "Home",
-                    style: TextStyle(color: Colors.black),
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentScreen =
+                            groups(); // if user taps on this dashboard tab will be active
+                        currentTab = 1;
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.chat,
+                          color: currentTab == 1 ? Colors.blue : Colors.grey,
+                        ),
+                        Text(
+                          'Chats',
+                          style: TextStyle(
+                            color: currentTab == 1 ? Colors.blue : Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.groups,
-                    color: Colors.black,
+
+              // Right Tab bar icons
+
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentScreen =
+                            activity(); // if user taps on this dashboard tab will be active
+                        currentTab = 2;
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.dashboard,
+                          color: currentTab == 2 ? Colors.blue : Colors.grey,
+                        ),
+                        Text(
+                          'Profile',
+                          style: TextStyle(
+                            color: currentTab == 2 ? Colors.blue : Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    "Groups",
-                    style: TextStyle(color: Colors.black),
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentScreen =
+                            profile(); // if user taps on this dashboard tab will be active
+                        currentTab = 3;
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.chat,
+                          color: currentTab == 3 ? Colors.blue : Colors.grey,
+                        ),
+                        Text(
+                          'Settings',
+                          style: TextStyle(
+                            color: currentTab == 3 ? Colors.blue : Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                 ],
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.bar_chart_rounded,
-                    color: Colors.black,
-                  ),
-                  Text(
-                    "Activity",
-                    style: TextStyle(color: Colors.black),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.account_circle_outlined,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
-            ),
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

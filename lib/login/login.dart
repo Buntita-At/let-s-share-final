@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:lets_share/home/home.dart';
+import 'package:lets_share/sing%20up/singup.dart';
 
 class login extends StatelessWidget {
   @override
@@ -109,7 +110,13 @@ class login extends StatelessWidget {
                         children: <Widget>[
                           Text("Don't have an account?"),
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => singup()),
+                                );
+                              },
                               child: Text(
                                 "Sign up",
                                 style: TextStyle(
