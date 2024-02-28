@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:lets_share/home/home.dart';
 
 class singup extends StatelessWidget {
   @override
@@ -77,7 +78,10 @@ class singup extends StatelessWidget {
                     child: MaterialButton(
                       minWidth: double.infinity,
                       height: 60,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => home()));
+                      },
                       color: Color.fromARGB(255, 255, 101, 193),
                       elevation: 0,
                       shape: RoundedRectangleBorder(
@@ -85,7 +89,7 @@ class singup extends StatelessWidget {
                       child: Text(
                         "Sign up",
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18),
+                            fontWeight: FontWeight.w600, fontSize: 16),
                       ),
                     ),
                   )),
@@ -95,11 +99,13 @@ class singup extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text("Already have an account?"),
-                      Text(
-                        " Login",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18),
-                      ),
+                      TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            " Login",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 18),
+                          )),
                     ],
                   )),
             ],

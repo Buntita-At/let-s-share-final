@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:lets_share/home/home.dart';
 
 class login extends StatelessWidget {
   @override
@@ -83,7 +84,12 @@ class login extends StatelessWidget {
                           child: MaterialButton(
                             minWidth: double.infinity,
                             height: 60,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => home()));
+                            },
                             color: Color.fromARGB(255, 255, 101, 193),
                             elevation: 0,
                             shape: RoundedRectangleBorder(
@@ -102,11 +108,13 @@ class login extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text("Don't have an account?"),
-                          Text(
-                            "Sign up",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 18),
-                          ),
+                          TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Sign up",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 18),
+                              )),
                         ],
                       ))
                 ],
