@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:lets_share/login/login.dart';
-import 'package:lets_share/sing%20up/singup.dart';
+import 'package:lets_share/Loginfuntion/login.dart';
+import 'package:lets_share/Loginfuntion/singup.dart';
 
 void main() {
   runApp(MaterialApp(
