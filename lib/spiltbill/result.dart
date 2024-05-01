@@ -60,14 +60,14 @@ class _ResultPageState extends State<ResultPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Equally Divide",
+                          "Everyone has to pay.",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                         Text(
-                          "\$$dividedAmount",
+                          "\฿$dividedAmount",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
@@ -83,16 +83,19 @@ class _ResultPageState extends State<ResultPage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Friends"),
-                            Text(widget.friends.round().toString()),
+                            Text(
+                              "Do not forget!",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(width: 15),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("14 %"),
-                          ],
+                          children: [],
                         ),
                       ],
                     ),

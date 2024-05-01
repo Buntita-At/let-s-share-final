@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:lets_share/loginfuntion/singup.dart';
+import 'package:lets_share/spiltbill/result.dart';
 
 class home extends StatelessWidget {
   const home({Key? key}) : super(key: key);
@@ -131,15 +132,14 @@ class _BillSplitState extends State<BillSplit> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("Friends", style: infoStyle),
-                            Text("Friends", style: infoStyle),
-                            Text("Friends", style: infoStyle),
                           ],
                         ),
                         SizedBox(width: 15),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("10", style: infoStyle),
+                            Text(friendsValue.round().toString(),
+                                style: infoStyle),
                             Text("14 %", style: infoStyle),
                             Text("Friends", style: infoStyle),
                           ],
@@ -195,7 +195,7 @@ class _BillSplitState extends State<BillSplit> {
                 ),
               ],
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 10),
             Row(
               children: [
                 buildButton("1"),
@@ -228,7 +228,14 @@ class _BillSplitState extends State<BillSplit> {
               style: TextButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 92, 166, 227),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultPage(bill, friendsValue),
+                  ),
+                );
+              },
               child: Center(
                 child: Text(
                   "Split Bill",
