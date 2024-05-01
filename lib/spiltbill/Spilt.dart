@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class BillSplit extends StatefulWidget {
   @override
@@ -8,6 +7,7 @@ class BillSplit extends StatefulWidget {
 
 class _BillSplitState extends State<BillSplit> {
   double friendsvalue = 0.0;
+
   buildButton(String text) {
     return Expanded(
       child: OutlinedButton(
@@ -15,7 +15,7 @@ class _BillSplitState extends State<BillSplit> {
         onPressed: () {},
         child: Text(
           text,
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.w700,
           ),
@@ -24,7 +24,7 @@ class _BillSplitState extends State<BillSplit> {
     );
   }
 
-  TextStyle infostyle = GoogleFonts.montserrat(
+  TextStyle infostyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w700,
   );
@@ -42,7 +42,7 @@ class _BillSplitState extends State<BillSplit> {
                 margin: EdgeInsets.only(top: 50),
                 child: Text(
                   "Split Bill",
-                  style: GoogleFonts.montserrat(
+                  style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   ),
@@ -65,14 +65,14 @@ class _BillSplitState extends State<BillSplit> {
                         children: [
                           Text(
                             "Total",
-                            style: GoogleFonts.montserrat(
+                            style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           Text(
                             "Total",
-                            style: GoogleFonts.montserrat(
+                            style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
                             ),
@@ -110,7 +110,7 @@ class _BillSplitState extends State<BillSplit> {
               SizedBox(height: 10),
               Text(
                 "How many friends?",
-                style: GoogleFonts.montserrat(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                 ),
@@ -182,16 +182,21 @@ class _BillSplitState extends State<BillSplit> {
                 ],
               ),
               TextButton(
-                  style: TextButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 92, 166, 227)),
-                  onPressed: () {},
-                  child: Center(
-                    child: Text("Split Bill",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                            color: const Color.fromARGB(255, 202, 223, 241))),
-                  ))
+                style: TextButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 92, 166, 227),
+                ),
+                onPressed: () {},
+                child: Center(
+                  child: Text(
+                    "Split Bill",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w700,
+                      color: const Color.fromARGB(255, 202, 223, 241),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
