@@ -1,39 +1,45 @@
-import 'dart:html';
+import 'dart:async';
 import 'dart:js';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:lets_share/home/home.dart';
-import 'package:lets_share/Loginfuntion/login.dart';
-import 'dart:async';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lets_share/Loginfuntion/login.dart';
+import 'package:lets_share/home/home.dart';
 
 class singup extends StatelessWidget {
-  @override
   final formKey = GlobalKey<FormState>();
 
-  TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  final TextEditingController name = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
-  Future sign_up() async {
-    String url = "http://192.168.1.119/flutter_login/register.php";
-    final respone = await http.post(Uri.parse(url), body: {
-      'name': name.text,
-      'password': password.text,
-      'email': email.text,
-    });
-    var data = json.decode(respone.body);
-    if (data == "Error") {
-      Navigator.pushNamed(context as BuildContext, 'singup');
-    } else {
-      Navigator.pushNamed(context as BuildContext, 'home');
+  Future signUp() async {
+    try {
+      String url = "http://localhost/flutter_login/register.php";
+      // String url = "http://localhost:3000/register";
+      final respone = await http.post(Uri.parse(url), body: {
+        'name': name.text,
+        'password': password.text,
+        'email': email.text,
+      });
+      var status = respone.statusCode;
+      if (status == 200) {
+        // Navigator.pushNamed(context as BuildContext, 'home');
+      } else {
+        // Navigator.pushNamed(context as BuildContext, 'home');
+        throw Exception('Failed to sign up');
+      }
+    } catch (e) {
+      print("Exception: " + e.toString());
+      throw Exception('Failed to sign up');
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Form(
+      key: formKey,
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.white,
@@ -44,7 +50,7 @@ class singup extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               size: 20,
               color: Colors.black,
@@ -53,7 +59,7 @@ class singup extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 40),
             height: MediaQuery.of(context).size.height - 50,
             width: double.infinity,
             child: Column(
@@ -62,17 +68,17 @@ class singup extends StatelessWidget {
                 Column(
                   children: <Widget>[
                     FadeInUp(
-                        duration: Duration(milliseconds: 1000),
-                        child: Text(
+                        duration: const Duration(milliseconds: 1000),
+                        child: const Text(
                           "Sign up",
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         )),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     FadeInUp(
-                        duration: Duration(milliseconds: 1200),
+                        duration: const Duration(milliseconds: 1200),
                         child: Text(
                           "Create your account",
                           style:
@@ -83,32 +89,49 @@ class singup extends StatelessWidget {
                 Column(
                   children: <Widget>[
                     FadeInUp(
-                      duration: Duration(milliseconds: 1200),
-                      child: makeInput(label: "Name", controller: name),
+                      duration: const Duration(milliseconds: 1200),
+                      child: makeInput(
+                        label: "Name",
+                        controller: name,
+                        validator: (value) {
+                          if (value!.isEmpty) return 'Name cannot be empty';
+                          return null;
+                        },
+                      ),
                     ),
                     FadeInUp(
-                      duration: Duration(milliseconds: 1300),
+                      duration: const Duration(milliseconds: 1300),
                       child: makeInput(
-                          label: "Email",
-                          obscureText: false,
-                          controller: email),
+                        label: "Email",
+                        obscureText: false,
+                        controller: email,
+                        validator: (value) {
+                          if (value!.isEmpty) return 'Email cannot be empty';
+                          return null;
+                        },
+                      ),
                     ),
                     FadeInUp(
-                      duration: Duration(milliseconds: 1400),
+                      duration: const Duration(milliseconds: 1400),
                       child: makeInput(
-                          label: "Password",
-                          obscureText: true,
-                          controller: password),
+                        label: "Password",
+                        obscureText: true,
+                        controller: password,
+                        validator: (value) {
+                          if (value!.isEmpty) return 'Password cannot be empty';
+                          return null;
+                        },
+                      ),
                     ),
                   ],
                 ),
                 FadeInUp(
-                    duration: Duration(milliseconds: 1500),
+                    duration: const Duration(milliseconds: 1500),
                     child: Container(
-                      padding: EdgeInsets.only(top: 3, left: 3),
+                      padding: const EdgeInsets.only(top: 3, left: 3),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
-                          border: Border(
+                          border: const Border(
                             bottom: BorderSide(color: Colors.black),
                             top: BorderSide(color: Colors.black),
                             left: BorderSide(color: Colors.black),
@@ -118,14 +141,21 @@ class singup extends StatelessWidget {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => home()));
+                          if (formKey.currentState!.validate()) {
+                            signUp().then((_) => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Home()),
+                                  )
+                                });
+                          }
                         },
-                        color: Color.fromARGB(255, 255, 101, 193),
+                        color: const Color.fromARGB(255, 255, 101, 193),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
-                        child: Text(
+                        child: const Text(
                           "Sign up",
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 16),
@@ -133,20 +163,20 @@ class singup extends StatelessWidget {
                       ),
                     )),
                 FadeInUp(
-                    duration: Duration(milliseconds: 1600),
+                    duration: const Duration(milliseconds: 1600),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("Already have an account?"),
+                        const Text("Already have an account?"),
                         TextButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => login()),
+                                    builder: (context) => Login()),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               " Login",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600, fontSize: 18),
@@ -161,30 +191,37 @@ class singup extends StatelessWidget {
     );
   }
 
-  Widget makeInput(
-      {label, obscureText = false, required TextEditingController controller}) {
+  Widget makeInput({
+    required String label,
+    obscureText = false,
+    required TextEditingController controller,
+    String? Function(String?)? validator,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
-        TextField(
+        TextFormField(
+          controller: controller,
           obscureText: obscureText,
+          validator: validator,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey.shade400)),
             border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey.shade400)),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
       ],

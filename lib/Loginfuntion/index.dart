@@ -4,13 +4,15 @@ import 'package:lets_share/Loginfuntion/login.dart';
 import 'package:lets_share/Loginfuntion/singup.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: index(),
+    home: Index(),
   ));
 }
 
-class index extends StatelessWidget {
+class Index extends StatelessWidget {
+  const Index({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +20,7 @@ class index extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -26,17 +28,17 @@ class index extends StatelessWidget {
               Column(
                 children: <Widget>[
                   FadeInUp(
-                      duration: Duration(milliseconds: 1000),
-                      child: Text(
+                      duration: const Duration(milliseconds: 1000),
+                      child: const Text(
                         "Welcome",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30),
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   FadeInUp(
-                      duration: Duration(milliseconds: 1200),
+                      duration: const Duration(milliseconds: 1200),
                       child: Text(
                         "Not good at calculating? No problem!! Let Let's Share help you.",
                         textAlign: TextAlign.center,
@@ -45,43 +47,43 @@ class index extends StatelessWidget {
                 ],
               ),
               FadeInUp(
-                  duration: Duration(milliseconds: 1400),
+                  duration: const Duration(milliseconds: 1400),
                   child: Container(
                     height: MediaQuery.of(context).size.height / 3,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage('assets/handelpig.png.jpg'))),
                   )),
               Column(
                 children: <Widget>[
                   FadeInUp(
-                      duration: Duration(milliseconds: 1500),
+                      duration: const Duration(milliseconds: 1500),
                       child: MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => login()));
+                              MaterialPageRoute(builder: (context) => Login()));
                         },
                         shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.black),
+                            side: const BorderSide(color: Colors.black),
                             borderRadius: BorderRadius.circular(50)),
-                        child: Text(
+                        child: const Text(
                           "Login",
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 18),
                         ),
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   FadeInUp(
-                      duration: Duration(milliseconds: 1600),
+                      duration: const Duration(milliseconds: 1600),
                       child: Container(
-                        padding: EdgeInsets.only(top: 3, left: 3),
+                        padding: const EdgeInsets.only(top: 3, left: 3),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            border: Border(
+                            border: const Border(
                               bottom: BorderSide(color: Colors.black),
                               top: BorderSide(color: Colors.black),
                               left: BorderSide(color: Colors.black),
@@ -96,11 +98,11 @@ class index extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (context) => singup()));
                           },
-                          color: Color.fromARGB(255, 255, 101, 193),
+                          color: const Color.fromARGB(255, 255, 101, 193),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50)),
-                          child: Text(
+                          child: const Text(
                             "Sign up",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 18),

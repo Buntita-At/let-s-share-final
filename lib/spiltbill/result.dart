@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lets_share/home/home.dart';
 
 class ResultPage extends StatefulWidget {
   final String bill;
@@ -30,14 +31,14 @@ class _ResultPageState extends State<ResultPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(top: 40),
-              child: Text(
+              margin: const EdgeInsets.only(top: 40),
+              child: const Text(
                 "Result",
                 style: TextStyle(
                   fontSize: 25,
@@ -48,8 +49,16 @@ class _ResultPageState extends State<ResultPage> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: 120,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 251, 181, 205),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 251, 181, 205),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 1.0,
+                    offset: Offset(0, 1)
+                  ),
+                ],
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,15 +68,15 @@ class _ResultPageState extends State<ResultPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Everyone has to pay.",
+                        const Text(
+                          "Equally Divide",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                         Text(
-                          "\฿$dividedAmount",
+                          "\$$dividedAmount",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
@@ -83,19 +92,16 @@ class _ResultPageState extends State<ResultPage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Do not forget!",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
+                            Text("Friends"),
+                            Text(widget.friends.round().toString()),
                           ],
                         ),
                         SizedBox(width: 15),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [],
+                          children: [
+                            Text("14 %"),
+                          ],
                         ),
                       ],
                     ),
