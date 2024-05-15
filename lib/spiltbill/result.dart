@@ -56,7 +56,7 @@ class _ResultPageState extends State<ResultPage> {
                   BoxShadow(
                     color: Colors.grey,
                     blurRadius: 1.0,
-                    offset: Offset(0, 1)
+                    offset: Offset(0, 1),
                   ),
                 ],
               ),
@@ -85,29 +85,19 @@ class _ResultPageState extends State<ResultPage> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Friends"),
-                            Text(widget.friends.round().toString()),
-                          ],
-                        ),
-                        SizedBox(width: 15),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("14 %"),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Home(),
+                  ),
+                );
+              },
+              child: Text('Go Home'),
             ),
           ],
         ),

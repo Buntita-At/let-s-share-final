@@ -1,20 +1,53 @@
-import 'dart:html';
-
-import 'package:animate_do/animate_do.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:lets_share/loginfuntion/singup.dart';
-import 'package:lets_share/spiltbill/result.dart';
+import 'package:lets_share/history.dart';
+import 'package:lets_share/spiltbill/result.dart'; // Import your HistoryPage widget file
+import 'package:firebase_core/firebase_core.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  final Future<FirebaseApp> _firebaseInit = Firebase.initializeApp();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Bill Splitter',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: FutureBuilder(
+        future: _firebaseInit,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Home();
+          } else {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
+      ),
+      routes: {
+        '/history': (context) => HistoryPage(),
+        // Add other routes as needed
+      },
+    );
+  }
+}
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       bottomNavigationBar: GNav(
         backgroundColor: Color.fromARGB(255, 243, 201, 215),
         activeColor: Colors.white,
@@ -28,8 +61,14 @@ class Home extends StatelessWidget {
             text: "HOME",
           ),
           GButton(
-            icon: Icons.add,
-            text: "ADD",
+            icon: Icons.history_edu,
+            text: "History",
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/history',
+              ); // Navigate to HistoryPage
+            },
           ),
         ],
       ),
@@ -39,7 +78,7 @@ class Home extends StatelessWidget {
 }
 
 class BillSplit extends StatefulWidget {
-  const BillSplit({super.key});
+  const BillSplit({Key? key}) : super(key: key);
 
   @override
   _BillSplitState createState() => _BillSplitState();
@@ -48,6 +87,7 @@ class BillSplit extends StatefulWidget {
 class _BillSplitState extends State<BillSplit> {
   String bill = '';
   double friendsValue = 0.0;
+
   buildButton(String text) {
     return Expanded(
       child: OutlinedButton(
@@ -81,11 +121,6 @@ class _BillSplitState extends State<BillSplit> {
     });
   }
 
-  TextStyle infoStyle = const TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w700,
-  );
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -114,7 +149,6 @@ class _BillSplitState extends State<BillSplit> {
                 children: [
                   Expanded(
                     child: Container(
-                      // elevation: 5,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         color: Color.fromARGB(255, 251, 181, 205),
@@ -124,7 +158,7 @@ class _BillSplitState extends State<BillSplit> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            "Total Firends",
+                            "Total Friends",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
@@ -145,19 +179,10 @@ class _BillSplitState extends State<BillSplit> {
                   ),
                   const SizedBox(width: 30),
                   Expanded(
-                    // color: const Color.fromARGB(255, 251, 181, 205),
-                    // elevation: 5,
                     child: Container(
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         color: Color.fromARGB(255, 251, 181, 205),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 1.0,
-                            offset: Offset(0, 1),
-                          ),
-                        ],
                       ),
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
@@ -181,105 +206,10 @@ class _BillSplitState extends State<BillSplit> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 30),
-                  Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Color.fromARGB(255, 251, 181, 205),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 1.0,
-                            offset: Offset(0, 1),
-                          ),
-                        ],
-                      ),
-                      padding: EdgeInsets.all(15.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "14 %",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Text(
-                            "Friends",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
-            // Container(
-            //   width: MediaQuery.of(context).size.width,
-            //   height: 120,
-            //   decoration: const BoxDecoration(
-            //     borderRadius: BorderRadius.all(Radius.circular(10)),
-            //     color: Color.fromARGB(255, 251, 181, 205),
-            //   ),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Padding(
-            //         padding: const EdgeInsets.all(15.0),
-            //         child: Column(
-            //           crossAxisAlignment: CrossAxisAlignment.start,
-            //           children: [
-            //             const Text(
-            //               "Total",
-            //               style: TextStyle(
-            //                 fontSize: 20,
-            //                 fontWeight: FontWeight.w700,
-            //               ),
-            //             ),
-            //             Text(
-            //               bill,
-            //               style: const TextStyle(
-            //                 fontSize: 20,
-            //                 fontWeight: FontWeight.w700,
-            //               ),
-            //             )
-            //           ],
-            //         ),
-            //       ),
-            //       Padding(
-            //         padding: const EdgeInsets.all(15.0),
-            //         child: Row(
-            //           children: [
-            //             Column(
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //                 Text("Friends", style: infoStyle),
-            //               ],
-            //             ),
-            //             const SizedBox(width: 15),
-            //             Column(
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //                 Text(friendsValue.round().toString(),
-            //                     style: infoStyle),
-            //                 Text("14 %", style: infoStyle),
-            //                 Text("Friends", style: infoStyle),
-            //               ],
-            //             ),
-            //           ],
-            //         ),
-            //       )
-            //     ],
-            //   ),
-            // ),
             const SizedBox(height: 10),
-            // Text left
             const Text(
               "How many friends?",
               style: TextStyle(
@@ -301,30 +231,6 @@ class _BillSplitState extends State<BillSplit> {
                 });
               },
             ),
-            const SizedBox(height: 10),
-            // Row(
-            //   children: [
-            //     Expanded(
-            //       child: Container(
-            //         height: 70,
-            //         decoration: BoxDecoration(
-            //           color: Colors.pink,
-            //           borderRadius: BorderRadius.circular(20),
-            //         ),
-            //         child: const Center(
-            //           child: Text(
-            //             'Calculate',
-            //             style: TextStyle(
-            //               fontSize: 24,
-            //               fontWeight: FontWeight.bold,
-            //               color: Colors.white,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
             const SizedBox(height: 10),
             Row(
               children: [

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "281632841160",
+    "project_id": "let-s-share-86d1b",
+    "storage_bucket": "let-s-share-86d1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281632841160:android:57956f95a1597aba53f4fd",
+        "android_client_info": {
+          "package_name": "com.example.lets_share"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvoi9GJcmeybrIMpAzjqSgyyn0b2feLLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
