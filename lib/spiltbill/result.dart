@@ -1,5 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:lets_share/home/home.dart';
+import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Initialize Firebase
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ResultPage('100', 2), // Example usage of ResultPage
+    );
+  }
+}
 
 class ResultPage extends StatefulWidget {
   final String bill;
@@ -21,15 +42,48 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   void divideAmount() {
-    double finalBill = double.parse(widget.bill) / widget.friends;
-    setState(() {
-      dividedAmount = finalBill.toStringAsFixed(2);
-    });
+    try {
+      double finalBill = double.parse(widget.bill) / widget.friends;
+      setState(() {
+        dividedAmount = finalBill.toStringAsFixed(2);
+      });
+
+      // Save data to Firestore
+      saveDataToFirestore(dividedAmount);
+    } catch (e) {
+      print('Error: $e'); // Print error for debugging
+      // Handle error gracefully, e.g., show an error message to the user
+    }
+  }
+
+  void saveDataToFirestore(String dividedAmount) async {
+    // Get the current date
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
+
+    // Reference to Firestore collection
+    CollectionReference results =
+        FirebaseFirestore.instance.collection('results');
+
+    // Add a new document with a generated ID
+    try {
+      await results.add({
+        'amount': dividedAmount,
+        'date': formattedDate,
+      });
+      print('Data saved to Firestore');
+    } catch (e) {
+      print('Error saving data: $e'); // Print error for debugging
+      // Handle error gracefully, e.g., show an error message to the user
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Result Page'),
+      ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -91,13 +145,9 @@ class _ResultPageState extends State<ResultPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => Home(),
-                  ),
-                );
+                Navigator.of(context).pop();
               },
-              child: Text('Go Home'),
+              child: Text('Go Back'),
             ),
           ],
         ),

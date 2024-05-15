@@ -11,8 +11,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _firebaseInit = Firebase.initializeApp();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,20 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FutureBuilder(
-        future: _firebaseInit,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Home();
-          } else {
-            return Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-        },
-      ),
+      home: Home(),
       routes: {
         '/history': (context) => HistoryPage(),
         // Add other routes as needed

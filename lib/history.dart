@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,12 +13,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // Define routes for navigation
       routes: {
         '/': (context) => HomePage(),
         '/history': (context) => HistoryPage(),
       },
-      initialRoute: '/', // Set initial route to the Home page
+      initialRoute: '/',
     );
   }
 }
@@ -37,79 +36,29 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class HistoryPage extends StatefulWidget {
-  @override
-  _HistoryPageState createState() => _HistoryPageState();
-}
-
-class _HistoryPageState extends State<HistoryPage> {
+class HistoryPage extends StatelessWidget {
+  // Dummy data for history list
   List<Map<String, dynamic>> historyList = [
     {
-      'date': '2024-05-10',
-      'description': 'Description for Item 1',
-      'color': Colors.red
+      'date': '2024-05-15',
+      'dividedAmount': 100,
+      'dateTime': DateTime.now(),
+      'color': Colors.blue,
     },
     {
-      'date': '2024-05-08',
-      'description': 'Description for Item 2',
-      'color': Colors.green
+      'date': '2024-05-14',
+      'dividedAmount': 150,
+      'dateTime': DateTime.now().subtract(Duration(days: 1)),
+      'color': Colors.green,
     },
-    // Other history items...
+    // Add more dummy data as needed
   ];
-
-  int _selectedIndex = 1; // Index of the selected tab
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('History Page'),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Color.fromARGB(255, 243, 201, 215),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 20,
-              color: Colors.black.withOpacity(0.1),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-          child: GNav(
-            backgroundColor: Color.fromARGB(255, 243, 201, 215),
-            activeColor: Colors.white,
-            tabBackgroundColor: Color.fromARGB(255, 243, 158, 186),
-            color: Colors.black,
-            gap: 8,
-            padding: EdgeInsets.all(15),
-            tabs: [
-              GButton(
-                icon: Icons.home,
-                text: "HOME",
-              ),
-              GButton(
-                icon: Icons.history_edu,
-                text: "History",
-              ),
-            ],
-            selectedIndex: _selectedIndex,
-            onTabChange: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-              // Navigation logic based on tab index
-              if (index == 0) {
-                // Navigate to home screen
-                Navigator.pushReplacementNamed(context, '/home');
-              } else if (index == 1) {
-                // Navigate to history screen
-                Navigator.pushReplacementNamed(context, '/history');
-              }
-            },
-          ),
-        ),
       ),
       body: ListView.builder(
         itemCount: historyList.length,
@@ -142,18 +91,33 @@ class _HistoryPageState extends State<HistoryPage> {
                 children: [
                   ListTile(
                     title: Text(
-                      historyList[index]['date'],
+                      'Date: ${historyList[index]['date']}',
                       style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    subtitle: Text(
-                      historyList[index]['description'],
-                      style: TextStyle(fontSize: 14, color: Colors.white),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Divided Amount: \$${historyList[index]['dividedAmount']}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          'Date Time: ${DateFormat('yyyy-MM-dd HH:mm').format(historyList[index]['dateTime'])}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  // Add more detailed info if needed
                 ],
               ),
             ),
