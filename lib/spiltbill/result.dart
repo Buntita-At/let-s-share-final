@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:http/http.dart' as http;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // Initialize Firebase
+void main() {
   runApp(MyApp());
 }
 
@@ -48,30 +45,37 @@ class _ResultPageState extends State<ResultPage> {
         dividedAmount = finalBill.toStringAsFixed(2);
       });
 
-      // Save data to Firestore
-      saveDataToFirestore(dividedAmount);
+      // Save data to PHP server
+      saveDataToServer(dividedAmount);
     } catch (e) {
       print('Error: $e'); // Print error for debugging
       // Handle error gracefully, e.g., show an error message to the user
     }
   }
 
-  void saveDataToFirestore(String dividedAmount) async {
+  void saveDataToServer(String dividedAmount) async {
     // Get the current date
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
 
-    // Reference to Firestore collection
-    CollectionReference results =
-        FirebaseFirestore.instance.collection('results');
+    // URL of your PHP script on the server
+    String url = 'http://your_server_address/save_data.php';
 
-    // Add a new document with a generated ID
+    // HTTP POST request to send data to PHP server
     try {
-      await results.add({
-        'amount': dividedAmount,
-        'date': formattedDate,
-      });
-      print('Data saved to Firestore');
+      var response = await http.post(
+        Uri.parse(url),
+        body: {
+          'amount': dividedAmount,
+          'date': formattedDate,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('Data saved to server');
+      } else {
+        print('Failed to save data. Status Code: ${response.statusCode}');
+      }
     } catch (e) {
       print('Error saving data: $e'); // Print error for debugging
       // Handle error gracefully, e.g., show an error message to the user
