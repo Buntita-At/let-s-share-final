@@ -17,8 +17,8 @@ class Login extends StatelessWidget {
 
   Future<void> login() async {
     try {
-      String url = "http://localhost/flutter_login/login.php";
-      // String url = "http://localhost:3000/login";
+      String url = "http://192.168.1.118/flutter_login/login.php";
+      //String url = "http://localhost:3000/login";
       final respone = await http.post(Uri.parse(url),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',

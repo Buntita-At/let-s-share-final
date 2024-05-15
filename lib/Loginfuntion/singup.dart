@@ -16,7 +16,7 @@ class singup extends StatelessWidget {
 
   Future signUp() async {
     try {
-      String url = "http://localhost/flutter_login/register.php";
+      String url = "http://192.168.1.118/flutter_login/register.php";
       //String url = "http://localhost:3000/register";
       final respone = await http.post(Uri.parse(url), body: {
         'name': name.text,
